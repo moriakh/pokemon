@@ -24,7 +24,7 @@
        $('img').on('click', function(){
            const pokemon = $(this).attr('id');
            console.log(pokemon);
-
+           $('#types').html("");
            $.get("https://pokeapi.co/api/v2/pokemon/"+pokemon+"/", function(data) {
            
            $('#pokedex').html(
@@ -37,12 +37,17 @@
             `
             ${data.name}
             `
-            );
-            $('#types').html(
-            `
-            ${data.types[0].type.name}
-            `
-            );
+            );            
+            for(i=0;i<data.types.length;i++){
+                $('#types').append(
+                `
+                <p>
+                ${data.types[i].type.name}
+                </p>
+                `
+                );
+            }
+
             $('#height').html(
             `
             ${data.height}
@@ -67,11 +72,11 @@
         <hr>
         <div class="row">
             <div class="col-2">
-                <div class="row border border-danger">
+                <div class="row border border-3 border-danger">
                     <p id="pokedex"></p>
                     <h4>Name</h4>
                     <p class="ms-3" id="name"></p>
-                    <h4>Type</h4>
+                    <h4>Types</h4>
                     <p class="ms-3" id="types"></p>
                     <h4>Height</h4>
                     <p class="ms-3" id="height"></p>
